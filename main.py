@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import requests
 from dotenv import load_dotenv
 import os
@@ -11,6 +11,11 @@ BASE_URL = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPbla
 SERVICE_KEY = os.getenv('SERVICE_KEY')  # .env 파일에서 서비스 키 로드
 
 app = Flask(__name__)
+
+# /robots.txt 처리
+@app.route('/robots.txt')
+def robots_txt():
+    return send_from_directory('static', 'robots.txt')
 
 @app.route('/')
 def index():
@@ -51,3 +56,6 @@ def results():
 
     except requests.exceptions.RequestException as e:
         return f"API 호출 중 오류 발생: {e}"
+
+if __name__ == '__main__':
+    app.run(debug=True)
