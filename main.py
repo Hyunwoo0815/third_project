@@ -1,11 +1,16 @@
 from flask import Flask, render_template, request
 import requests
+from dotenv import load_dotenv
+import os
 
-app = Flask(__name__)
+# .env 파일 로드
+load_dotenv()
 
 # API 기본 정보
 BASE_URL = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPblancDetail"
-SERVICE_KEY = "WKp1VvR7awnciw/bWZyS/ucpv8Tiihgn8LgHK7a7Hw0u+ewXMZNo7buPDOywQc2k7pjJssVL39S0Oe6RWzCa3w=="
+SERVICE_KEY = os.getenv('SERVICE_KEY')  # .env 파일에서 서비스 키 로드
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():
@@ -46,6 +51,3 @@ def results():
 
     except requests.exceptions.RequestException as e:
         return f"API 호출 중 오류 발생: {e}"
-
-if __name__ == '__main__':
-    app.run(debug=True)
