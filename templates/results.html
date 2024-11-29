@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청약홈 분양정보 결과</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        /* 제목 스타일 */
+        h1 {
+            font-size: 2.5rem; 
+            color: #fff;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 카드 스타일 */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .card-title {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        /* 모바일 화면에서 테이블 개선 */
+        @media (max-width: 768px) {
+            .table thead {
+                display: none; /* 테이블 헤더 숨기기 */
+            }
+
+            .table tbody, .table tr, .table td {
+                display: block; /* 테이블 항목들을 블록으로 표시 */
+                width: 100%;
+                margin-bottom: 15px; /* 항목 간 간격 */
+            }
+
+            .table td {
+                text-align: right;
+                position: relative;
+                padding-left: 50%; /* 왼쪽에 패딩 추가 */
+                white-space: normal; /* 텍스트가 줄바꿈되도록 */
+                font-size: 0.9rem; /* 모바일 폰트 크기 조정 */
+            }
+
+            .table td:before {
+                content: attr(data-label); /* 항목명 표시 */
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                font-size: 1rem; /* 항목 레이블 크기 */
+            }
+
+            .table td:last-child {
+                border-bottom: 1px solid #ddd;
+            }
+        }
+
+        /* 데스크탑에서는 원래 테이블 형식 */
+        @media (min-width: 769px) {
+            .table td {
+                white-space: nowrap; /* '공급규모'가 2줄로 보이지 않도록 한 줄로 설정 */
+            }
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            width: 100%; /* 모바일에서 버튼이 화면 전체를 차지하도록 */
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">{{ year }}년도, {{ area }} 지역의 모집공고 리스트</h1>
+        {% if data %}
+        <div class="mt-4">
+            {% for item in data %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.HOUSE_NM }}</h5>
+                    <p><strong>공급위치:</strong> {{ item.HSSPLY_ADRES }}</p>
+                    <p><strong>공급규모:</strong> {{ item.TOT_SUPLY_HSHLDCO }}</p>
+                    <p><strong>모집공고일:</strong> {{ item.RCRIT_PBLANC_DE }}</p>
+                    <p><strong>홈페이지:</strong> <a href="{{ item.HMPG_ADRES }}" target="_self"><i class="fas fa-home"></i> 홈페이지</a></p>
+                    <p><strong>상세 분양정보:</strong> <a href="{{ item.PBLANC_URL }}" target="_self"><i class="fas fa-info-circle"></i> 상세 분양정보</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>해당 조건에 맞는 분양정보가 없습니다.</p>
+        {% endif %}
+        <a href="/" class="btn btn-secondary mt-4">돌아가기</a>
+    </div>
+</body>
+</html>

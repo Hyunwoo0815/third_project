@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청약홈 분양정보 조회</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+        /* 전체 화면 높이를 100%로 설정 */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Flexbox를 사용하여 중앙 정렬 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 컨테이너 스타일링 */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* 안내 문장 스타일 */
+        .info-text {
+            text-align: center;
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* 폼 요소 스타일 */
+        .form-label {
+            font-weight: bold;
+        }
+        .form-select, .form-control {
+            border-radius: 8px;
+        }
+
+        /* 버튼 스타일 */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>청약홈 분양정보</h1>
+        <!-- 안내 문장 추가 -->
+        <p class="info-text">원하시는 연도와 지역을 선택하여 청약홈 분양 정보를 확인해 보세요.</p>
+        
+        <form action="/results" method="POST">
+            <div class="mb-3">
+                <label for="year" class="form-label">모집공고 연도</label>
+                <select class="form-select" id="year" name="year" required>
+                    <option value="" disabled selected>선택하세요</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="subscrpt_area_name" class="form-label">공급지역명</label>
+                <select class="form-select" id="subscrpt_area_name" name="subscrpt_area_name" required>
+                    <option value="" disabled selected>선택하세요</option>
+                    <option value="서울">서울</option>
+                    <option value="강원">강원</option>
+                    <option value="대전">대전</option>
+                    <option value="충남">충남</option>
+                    <option value="세종">세종</option>
+                    <option value="충북">충북</option>
+                    <option value="인천">인천</option>
+                    <option value="경기">경기</option>
+                    <option value="광주">광주</option>
+                    <option value="전남">전남</option>
+                    <option value="전북">전북</option>
+                    <option value="부산">부산</option>
+                    <option value="경남">경남</option>
+                    <option value="울산">울산</option>
+                    <option value="제주">제주</option>
+                    <option value="대구">대구</option>
+                    <option value="경북">경북</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">조회</button>
+        </form>
+    </div>
+</body>
+</html>
