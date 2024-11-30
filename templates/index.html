@@ -1,131 +1,215 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3349170217265964"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3349170217265964" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>청약홈 분양정보 조회</title>
+    <title>청약 정보 포털</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 전체 화면 높이를 100%로 설정 */
         html, body {
-            height: 100%;
             margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #89cff0, #f8b195);
+            min-height: 100vh;
         }
 
-        /* Flexbox를 사용하여 중앙 정렬 */
-        body {
+        .header {
+            text-align: center;
+            background-color: #34495e;
+            color: #ffffff;
+            padding: 20px 0; /* 위아래 간격을 동일하게 설정 */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
         }
 
-        /* 컨테이너 스타일링 */
-        .container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .header h1 {
+            margin: 0;
+            font-size: 3rem; /* 글씨 크기 */
+            font-weight: 700;
+            color: #ffffff; /* 텍스트 컬러를 하얀색으로 설정 */
+        }
+
+        .header p {
+            margin: 10px 0 0; /* 제목과 설명 간격 */
+            font-size: 1.25rem; /* 설명 글씨 크기 */
+            font-weight: 400;
+        }
+
+        .section-container {
+            margin: 20px auto;
             padding: 30px;
-            max-width: 600px;
-            width: 100%;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 95%;
         }
 
-        /* 제목 스타일 */
-        h1 {
-            color: #343a40;
+        h1, h2 {
+            color: #34495e;
             text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .info-text {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 16px;
             margin-bottom: 20px;
         }
 
-        /* 안내 문장 스타일 */
-        .info-text {
-            text-align: center;
-            color: #6c757d;
-            font-size: 16px;
-            margin-bottom: 30px;
+        .announcement-list {
+            list-style-type: none;
+            padding-left: 0;
         }
 
-        /* 폼 요소 스타일 */
-        .form-label {
-            font-weight: bold;
-        }
-        .form-select, .form-control {
+        .announcement-list li {
+            background-color: #ecf0f1;
+            padding: 15px;
             border-radius: 8px;
+            margin-bottom: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        /* 버튼 스타일 */
+        .announcement-list li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .announcement-list li span {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #2c3e50;
+        }
+
+        .announcement-list li a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .announcement-list li a:hover {
+            text-decoration: underline;
+        }
+
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #2980b9;
+            border-color: #2980b9;
             padding: 12px;
             font-size: 16px;
             border-radius: 8px;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            transition: background-color 0.2s, transform 0.2s;
         }
 
-        /* 푸터 스타일 */
+        .btn-primary:hover {
+            background-color: #1c5980;
+            transform: translateY(-3px);
+        }
+
         .footer {
             text-align: center;
             margin-top: 30px;
             font-size: 14px;
-            color: #6c757d;
+            color: #ffffff;
         }
-        .footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .section-container {
+                padding: 20px;
+            }
+
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-primary {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem; /* 반응형 글씨 크기 조정 */
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 헤더 섹션 -->
+    <div class="header">
+        <h1>청약 정보 포털</h1>
+        <p>최신 청약 정보를 한눈에 확인하고, 맞춤 검색 기능을 활용해보세요.</p>
+    </div>
+
     <div class="container">
-        <h1>청약홈 분양정보</h1>
-        <!-- 안내 문장 추가 -->
-        <p class="info-text">원하시는 연도와 지역을 선택하여 청약홈 분양 정보를 확인해 보세요.</p>
-        
-        <form action="/results" method="POST">
-            <div class="mb-3">
-                <label for="year" class="form-label">모집공고 연도</label>
-                <select class="form-select" id="year" name="year" required>
-                    <option value="" disabled selected>선택하세요</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="subscrpt_area_name" class="form-label">공급지역명</label>
-                <select class="form-select" id="subscrpt_area_name" name="subscrpt_area_name" required>
-                    <option value="" disabled selected>선택하세요</option>
-                    <option value="서울">서울</option>
-                    <option value="강원">강원</option>
-                    <option value="대전">대전</option>
-                    <option value="충남">충남</option>
-                    <option value="세종">세종</option>
-                    <option value="충북">충북</option>
-                    <option value="인천">인천</option>
-                    <option value="경기">경기</option>
-                    <option value="광주">광주</option>
-                    <option value="전남">전남</option>
-                    <option value="전북">전북</option>
-                    <option value="부산">부산</option>
-                    <option value="경남">경남</option>
-                    <option value="울산">울산</option>
-                    <option value="제주">제주</option>
-                    <option value="대구">대구</option>
-                    <option value="경북">경북</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">조회</button>
-        </form>
+        <!-- 오늘의 청약정보 섹션 -->
+        <div class="section-container">
+            <h1>오늘의 청약정보</h1>
+            <p class="info-text">최신 청약 정보를 확인하고 놓치지 마세요!</p>
+            <ul class="announcement-list">
+                {% for i, (house_name, url) in enumerate(latest_house_links, start=1) %}
+                <li>
+                    <span>{{ i }}.</span>
+                    <a href="{{ url }}">{{ house_name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- 맞춤형 청약 검색 섹션 -->
+        <div class="section-container">
+            <h2>맞춤형 청약 검색</h2>
+            <p class="info-text">원하는 청약 정보를 쉽게 찾아보세요.</p>
+            <form action="/results" method="POST">
+                <div class="mb-3">
+                    <label for="year" class="form-label">모집공고 연도</label>
+                    <select class="form-select" id="year" name="year" required>
+                        <option value="" disabled selected>선택하세요</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="subscrpt_area_name" class="form-label">공급지역명</label>
+                    <select class="form-select" id="subscrpt_area_name" name="subscrpt_area_name" required>
+                        <option value="" disabled selected>선택하세요</option>
+                        <option value="서울">서울</option>
+                        <option value="강원">강원</option>
+                        <option value="대전">대전</option>
+                        <option value="충남">충남</option>
+                        <option value="세종">세종</option>
+                        <option value="충북">충북</option>
+                        <option value="인천">인천</option>
+                        <option value="경기">경기</option>
+                        <option value="광주">광주</option>
+                        <option value="전남">전남</option>
+                        <option value="전북">전북</option>
+                        <option value="부산">부산</option>
+                        <option value="경남">경남</option>
+                        <option value="울산">울산</option>
+                        <option value="제주">제주</option>
+                        <option value="대구">대구</option>
+                        <option value="경북">경북</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">검색</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div class="footer">
+        <p>© 2024 청약 정보 포털. 모든 권리 보유.</p>
     </div>
 </body>
 </html>
