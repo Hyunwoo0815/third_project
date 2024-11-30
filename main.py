@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_from_directory
 import requests
 from dotenv import load_dotenv
 import os
+import logging
 
 # .env 파일 로드
 load_dotenv()
@@ -10,6 +11,9 @@ load_dotenv()
 BASE_URL = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPblancDetail"
 SERVICE_KEY = os.getenv('SERVICE_KEY')  # .env 파일에서 서비스 키 로드
 
+# 로깅 설정
+logging.basicConfig(level=logging.INFO)
+
 app = Flask(__name__)
 
 # /robots.txt 처리
@@ -17,45 +21,57 @@ app = Flask(__name__)
 def robots_txt():
     return send_from_directory('static', 'robots.txt')
 
+# 최신 공고 10개를 가져오는 함수
+def fetch_latest_announcements():
+    params = {
+        "page": 1,
+        "perPage": 10,
+        "serviceKey": SERVICE_KEY
+    }
+
+    try:
+        response = requests.get(BASE_URL, params=params)
+        response.raise_for_status()
+        data = response.json()
+        if data.get('data'):
+            latest_announcements = [(item['HOUSE_NM'], item['PBLANC_URL']) for item in data['data']]
+            return latest_announcements
+        return []
+    except requests.exceptions.RequestException as e:
+        logging.error(f"API 호출 중 오류 발생: {e}")
+        return []
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    latest_house_links = fetch_latest_announcements()
+    return render_template('index.html', latest_house_links=latest_house_links, enumerate=enumerate)
 
 @app.route('/results', methods=['POST'])
 def results():
     year = request.form['year']
     subscrpt_area_name = request.form['subscrpt_area_name']
-    
-    # 입력한 연도를 바탕으로 시작일과 종료일 설정
     start_date = f"{year}-01-01"
     end_date = f"{year}-12-31"
-    
-    # 요청 파라미터 설정
     params = {
         "page": 1,
         "perPage": 10,
-        "cond[RCRIT_PBLANC_DE::GTE]": start_date,  # 시작일 필터링 (입력한 연도의 1월 1일)
-        "cond[RCRIT_PBLANC_DE::LTE]": end_date,    # 종료일 필터링 (입력한 연도의 12월 31일)
-        "cond[SUBSCRPT_AREA_CODE_NM::EQ]": subscrpt_area_name,  # 지역명 필터링
+        "cond[RCRIT_PBLANC_DE::GTE]": start_date,
+        "cond[RCRIT_PBLANC_DE::LTE]": end_date,
+        "cond[SUBSCRPT_AREA_CODE_NM::EQ]": subscrpt_area_name,
         "serviceKey": SERVICE_KEY
     }
+    logging.info(f"Sending request with params: {params}")
 
     try:
-        # API 요청
         response = requests.get(BASE_URL, params=params)
-        response.raise_for_status()  # HTTP 에러 발생 시 예외 처리
-
-        # 결과 출력
+        response.raise_for_status()
         data = response.json()
-
-        # 데이터 확인 및 결과 페이지로 전달
         if data.get('data'):
             return render_template('results.html', data=data['data'], year=year, area=subscrpt_area_name)
-        else:
-            return render_template('results.html', data=None, year=year, area=subscrpt_area_name)
-
+        return render_template('results.html', data=None, year=year, area=subscrpt_area_name)
     except requests.exceptions.RequestException as e:
+        logging.error(f"API 호출 중 오류 발생: {e}")
         return f"API 호출 중 오류 발생: {e}"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
