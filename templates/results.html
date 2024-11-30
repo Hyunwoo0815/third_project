@@ -1,117 +1,148 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3349170217265964"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>청약홈 분양정보 결과</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>청약 정보 포털 - 검색 결과</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 제목 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #89cff0, #f8b195);
+            min-height: 100vh;
+        }
+
+        .section-container {
+            margin: 20px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 95%;
+            border: 2px solid rgba(44, 62, 80, 0.3); /* 테두리 추가 */
+        }
+
         h1 {
-            font-size: 2.5rem; 
-            color: #fff;
-            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
-            padding: 20px;
-            border-radius: 10px;
+            color: #34495e;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
-        /* 카드 스타일 */
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .sub-text {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .sub-text span {
+            font-weight: bold;
+            color: #2980b9; /* 기본 블루 */
         }
 
-        .card-body {
+        .sub-text .highlight-orange {
+            color: #e67e22; /* 오렌지 */
+        }
+
+        .sub-text .highlight-green {
+            color: #27ae60; /* 그린 */
+        }
+
+        .announcement-item {
             background-color: #f9f9f9;
             padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #ddd; /* 검색결과에도 경계 추가 */
         }
 
-        .card-title {
-            color: #333;
-            font-size: 1.5rem;
+        .announcement-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* 모바일 화면에서 테이블 개선 */
+        .announcement-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2980b9;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .announcement-title:hover {
+            text-decoration: underline;
+        }
+
+        .announcement-details {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .announcement-links a {
+            display: block; /* 세로로 나열 */
+            font-size: 14px;
+            color: #2980b9;
+            text-decoration: none;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .announcement-links a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
-            .table thead {
-                display: none; /* 테이블 헤더 숨기기 */
+            .section-container {
+                padding: 20px;
             }
 
-            .table tbody, .table tr, .table td {
-                display: block; /* 테이블 항목들을 블록으로 표시 */
-                width: 100%;
-                margin-bottom: 15px; /* 항목 간 간격 */
+            h1 {
+                font-size: 1.5rem;
             }
 
-            .table td {
-                text-align: right;
-                position: relative;
-                padding-left: 50%; /* 왼쪽에 패딩 추가 */
-                white-space: normal; /* 텍스트가 줄바꿈되도록 */
-                font-size: 0.9rem; /* 모바일 폰트 크기 조정 */
+            .sub-text {
+                font-size: 14px;
             }
-
-            .table td:before {
-                content: attr(data-label); /* 항목명 표시 */
-                position: absolute;
-                left: 10px;
-                font-weight: bold;
-                font-size: 1rem; /* 항목 레이블 크기 */
-            }
-
-            .table td:last-child {
-                border-bottom: 1px solid #ddd;
-            }
-        }
-
-        /* 데스크탑에서는 원래 테이블 형식 */
-        @media (min-width: 769px) {
-            .table td {
-                white-space: nowrap; /* '공급규모'가 2줄로 보이지 않도록 한 줄로 설정 */
-            }
-        }
-
-        /* 버튼 스타일 */
-        .btn {
-            width: 100%; /* 모바일에서 버튼이 화면 전체를 차지하도록 */
-            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">{{ year }}년도, {{ area }} 지역의 모집공고 리스트</h1>
+    <div class="section-container">
+        <h1>검색된 청약 정보</h1>
+        <p class="sub-text">
+            <span>홈페이지</span> 및 <span class="highlight-orange">상세 분양정보</span> 확인을 통해 <span class="highlight-green">분양가</span>를 확인해 보세요.
+        </p>
         {% if data %}
-        <div class="mt-4">
-            {% for item in data %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.HOUSE_NM }}</h5>
-                    <p><strong>공급위치:</strong> {{ item.HSSPLY_ADRES }}</p>
-                    <p><strong>공급규모:</strong> {{ item.TOT_SUPLY_HSHLDCO }}</p>
-                    <p><strong>모집공고일:</strong> {{ item.RCRIT_PBLANC_DE }}</p>
-                    <p><strong>홈페이지:</strong> <a href="{{ item.HMPG_ADRES }}" target="_self"><i class="fas fa-home"></i> 홈페이지</a></p>
-                    <p><strong>상세 분양정보:</strong> <a href="{{ item.PBLANC_URL }}" target="_self"><i class="fas fa-info-circle"></i> 상세 분양정보</a></p>
+            {% for announcement in data %}
+            <div class="announcement-item">
+                <!-- 공고문 제목 -->
+                <a href="{{ announcement.PBLANC_URL }}" class="announcement-title" target="_self">
+                    {{ announcement.HOUSE_NM }}
+                </a>
+                <!-- 세부 정보 -->
+                <div class="announcement-details">
+                    <p><strong>공급위치:</strong> {{ announcement.HSSPLY_ADRES }}</p>
+                    <p><strong>공급규모:</strong> {{ announcement.TOT_SUPLY_HSHLDCO }} 세대</p>
+                    <p><strong>모집공고일:</strong> {{ announcement.RCRIT_PBLANC_DE }}</p>
+                </div>
+                <!-- 링크들 -->
+                <div class="announcement-links">
+                    <a href="{{ announcement.HMPG_ADRES }}" target="_self">홈페이지 바로가기 ☜</a>
+                    <a href="{{ announcement.PBLANC_URL }}" target="_self">상세 분양정보 보러가기 ☜</a>
                 </div>
             </div>
             {% endfor %}
-        </div>
         {% else %}
-        <p>해당 조건에 맞는 분양정보가 없습니다.</p>
+        <p>검색된 공고가 없습니다.</p>
         {% endif %}
-        <a href="/" class="btn btn-secondary mt-4">돌아가기</a>
     </div>
 </body>
 </html>
